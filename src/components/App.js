@@ -6,7 +6,6 @@ import Header from './Header/Header';
 import Compose from './Compose/Compose';
 import Post from './Post/Post'
 
-import Axios from 'axios'
 import axios from 'axios';
 
 class App extends Component {
@@ -43,8 +42,19 @@ class App extends Component {
     }).catch(err=>console.log(err))
   }
 
-  createPost() {
 
+  createPost(text) {
+    axios.post(`https://practiceapi.devmountain.com/api/posts`, {text})
+    .then(res=>{
+      this.setState({ posts : res.data})
+    }).catch(err=>console.log(err))
+  }
+
+  searchPosts = (text)=>{
+    axios.get(`https://practiceapi.devmountain.com/api/posts/filter?text=${encodeURI(text)}`)
+    .then(res=> {
+      this.setState({ posts: res.data })
+    }).catch(err=> console.log(err))
   }
 
   render() {
@@ -52,11 +62,11 @@ class App extends Component {
 
     return (
       <div className="App__parent">
-        <Header />
+        <Header searchPostsFn={this.searchPosts} posts={posts}/>
 
         <section className="App__content">
 
-          <Compose />
+          <Compose createPostFn={this.createPost}/>
           {posts.map((post)=>{
             return <Post 
               id={post.id} 
@@ -65,6 +75,7 @@ class App extends Component {
               date={post.date} 
               key={post.id}
               deletePost={this.deletePost}
+              
               />
           })}
 
