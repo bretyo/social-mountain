@@ -15,15 +15,13 @@ export default class Search extends Component {
     }
   }
   render() {
-    const {userInput} = this.state;
-    const {searchPostsFn} = this.props;
     return (
       <section className="Search__parent">
 
         <div className="Search__content">
-          <input onChange={e=>this.setState({ userInput: e.target.value })} placeholder="Search Your Feed" />
+          <input value={this.state.userInput} onChange={e=>this.setState({ userInput: e.target.value })} placeholder="Search Your Feed" />
 
-          <SearchIcon onClick={()=>searchPostsFn(userInput)} id="Search__icon" />
+          <SearchIcon onClick={()=>this.props.searchPostsFn(encodeURI(this.state.userInput))} id="Search__icon" />
         </div>
         
       </section>

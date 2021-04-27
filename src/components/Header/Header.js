@@ -25,7 +25,7 @@ export default class Header extends Component {
 
           {/* Displays the search bar */}
           <div className="Header__right">
-            <Search searchPostsFn={this.props.searchPostsFn}/>
+            <Search searchPostsFn={this.props.searchPostsFn} />
 
             {/* Displays the profile icon */}
             <div className="Header__profile">
